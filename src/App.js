@@ -1,22 +1,24 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import data from "./data";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import RoadMap from "./Pages/RoadMap";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Modal from "./Pages/Modal";
-import Comments from "./Pages/Comments";
+import FeedbackDetails from "./Pages/FeedbackDetails";
 import AuthContext from "./contexts/authContext";
 import DataContext from "./contexts/DataContext";
-
-
 
 const App = () => {
   // const [feedbacks, setFeedbacks] = useState(data.productRequests);
   const [active, setActive] = useState("All");
-  const store = useContext(AuthContext)
-  const dataStore = useContext(DataContext)
-
+  const store = useContext(AuthContext);
+  const dataStore = useContext(DataContext);
 
   // const increaseVote = (id) => {
   //   const newFeedbacks = feedbacks.map((feedback) => {
@@ -75,9 +77,7 @@ const App = () => {
   //   }
   // };
 
-
   return (
-
     <BrowserRouter>
       <Switch>
         {store.isLoggedIn ? (
@@ -97,23 +97,17 @@ const App = () => {
             <Route path="/newfeedback" exact>
               <Modal />
             </Route>
-            <Route path="/comments" exact>
-              <Comments />
+            <Route path="/feedbacks/:feedbackId" exact>
+              <FeedbackDetails />
             </Route>
-         
-
           </>
-        ) :
+        ) : (
           <>
             <Route path="/login">
               <Login />
             </Route>
-   
-
           </>
-        }
-
-
+        )}
       </Switch>
     </BrowserRouter>
   );

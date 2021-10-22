@@ -144,54 +144,12 @@ ol {
 .comments-container {
   width: 75rem;
 }
+
 .comments-container {
   background-color: #fff;
   border-radius: 10px;
 }
 
-.reply,
-.single-comment {
-  display: flex;
-  padding: 2.8rem 3.2rem;
-  margin-bottom: 2rem;
-}
-
-.comments-container img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 2rem;
-}
-.comments-container h3 {
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.194444px;
-  color: #3a4374;
-}
-.app__request-comment {
-}
-.comments-container p,
-.comments-container span {
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 22px;
-  margin-top: 1.7rem;
-  color: #647196;
-}
-.reply-btn {
-  margin-left: auto;
-}
-.reply-btn button {
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 19px;
-  background-color: transparent;
-  border: none;
-  color: #4661e6;
-  cursor: pointer;
-}
 .app__request {
   background-color: var(--color-white);
   padding: 2.8rem 3.2rem;
