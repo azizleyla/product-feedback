@@ -15,7 +15,7 @@ function RequestBoard({ feedbacks, sortRequests }) {
                 <option value="Most Comments">Most Comments</option>
                 <option value="Least Comments">Least Comments</option>
             </select>
-            <Link to="/modal" style={{ marginLeft: "auto" }}>
+            <Link to="/newfeedback" style={{ marginLeft: "auto" }}>
                 <PrimaryButton >Add Feedback</PrimaryButton>
             </Link>
 

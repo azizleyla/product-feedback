@@ -94,18 +94,22 @@ const App = () => {
                 filterItems={dataStore.requests}
               />
             </Route>
-            <Route path="/newfeedback" component={Modal} />
-            <Route path="/comments">
+            <Route path="/newfeedback" exact>
+              <Modal />
+            </Route>
+            <Route path="/comments" exact>
               <Comments />
             </Route>
-            <Redirect to="/" />
+         
+
           </>
         ) :
           <>
             <Route path="/login">
               <Login />
             </Route>
-            <Redirect to="/login" />
+   
+
           </>
         }
 

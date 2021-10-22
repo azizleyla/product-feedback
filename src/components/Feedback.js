@@ -1,27 +1,31 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { StatusBtn } from "./Button";
-
+import commentIcon from "../assets/shared/icon-comments.svg"
 const Feedback = ({ id, upvotes, title, description, comments, category, increaseVote, isThisUserUpvoted }) => {
 
   return (
-    <AppRequest>
-      <button className={`app__request-upvotes ${isThisUserUpvoted ? 'clicked' : ''}`} onClick={() => { return isThisUserUpvoted ? '' : increaseVote(id) }}>
-        <img className="img" src="assets/shared/icon-arrow-up.svg" alt="icon" />
-        <span>{upvotes}</span>
-      </button>
-      <div className="app__request-details">
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <StatusBtn type="button" className="status-btn">
-          {category}
-        </StatusBtn>
-      </div>
-      <div className="app__request-comment">
-        <img src="assets/shared/icon-comments.svg" alt="" />
-        <span className="comment">{comments ? comments.length : 0}</span>
-      </div>
-    </AppRequest >
+    <Link to="/comments">
+      <AppRequest>
+        <button className={`app__request-upvotes ${isThisUserUpvoted ? 'clicked' : ''}`} onClick={() => { return isThisUserUpvoted ? '' : increaseVote(id) }}>
+          <img className="img" src="assets/shared/icon-arrow-up.svg" alt="icon" />
+          <span>{upvotes}</span>
+        </button>
+        <div className="app__request-details">
+          <h3>{title}</h3>
+          <p>{description}</p>
+          <StatusBtn type="button" className="status-btn">
+            {category}
+          </StatusBtn>
+        </div>
+        <div className="app__request-comment">
+          <img src={commentIcon} alt="" />
+          <span className="comment">{comments ? comments.length : 0}</span>
+        </div>
+      </AppRequest >
+
+    </Link>
 
 
   );
@@ -35,8 +39,9 @@ const AppRequest = styled.div`
   border-radius: 1rem;
   display: flex;
   align-items: center;
+  margin-bottom: 2rem;
   &:not(:last-child){
-    margin-bottom: 2rem;
+   
   }
   .app__request-upvotes {
     border-radius: 1rem;
