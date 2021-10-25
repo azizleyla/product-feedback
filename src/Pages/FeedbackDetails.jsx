@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import Feedback from "../components/Feedback";
 import { StatusBtn } from "../components/Button";
 import styled from "styled-components";
-import Comment from "../components/Comments/Comment";
-import Replies from "../components/Comments/Replies";
+import Comments from "../components/product-details/comments/Comments";
+import Replies from "../components/product-details/comments/Reply";
 import DataContext from "../contexts/DataContext";
 import { useParams } from "react-router";
 
@@ -16,13 +16,14 @@ const FeedbackDetails = () => {
     return request.id === Number(params.feedbackId);
   });
 
-  console.log(feedbackDetails);
-
-  console.log(data);
+  console.log(feedbackDetails.comments);
   return (
     <>
-      <Feedback />
-      <Comment />
+      <AppRequestsContainer>
+        <Feedback {...feedbackDetails} />
+      </AppRequestsContainer>
+
+      <Comments comments={feedbackDetails.comments} />
       <Replies />
     </>
   );

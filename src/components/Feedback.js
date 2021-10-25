@@ -2,14 +2,33 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { StatusBtn } from "./Button";
-import commentIcon from "../assets/shared/icon-comments.svg"
-const Feedback = ({ id, upvotes, title, description, comments, category, increaseVote, isThisUserUpvoted }) => {
-
+import commentIcon from "../assets/shared/icon-comments.svg";
+const Feedback = ({
+  id,
+  upvotes,
+  title,
+  description,
+  comments,
+  category,
+  increaseVote,
+  isThisUserUpvoted,
+}) => {
   return (
-    <Link to="/comments">
+    <Link to={`/feedbacks/${id}`}>
       <AppRequest>
-        <button className={`app__request-upvotes ${isThisUserUpvoted ? 'clicked' : ''}`} onClick={() => { return isThisUserUpvoted ? '' : increaseVote(id) }}>
-          <img className="img" src="assets/shared/icon-arrow-up.svg" alt="icon" />
+        <button
+          className={`app__request-upvotes ${
+            isThisUserUpvoted ? "clicked" : ""
+          }`}
+          onClick={() => {
+            return isThisUserUpvoted ? "" : increaseVote(id);
+          }}
+        >
+          <img
+            className="img"
+            src="assets/shared/icon-arrow-up.svg"
+            alt="icon"
+          />
           <span>{upvotes}</span>
         </button>
         <div className="app__request-details">
@@ -23,11 +42,8 @@ const Feedback = ({ id, upvotes, title, description, comments, category, increas
           <img src={commentIcon} alt="" />
           <span className="comment">{comments ? comments.length : 0}</span>
         </div>
-      </AppRequest >
-
+      </AppRequest>
     </Link>
-
-
   );
 };
 
@@ -40,8 +56,7 @@ const AppRequest = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
-  &:not(:last-child){
-   
+  &:not(:last-child) {
   }
   .app__request-upvotes {
     border-radius: 1rem;
@@ -66,8 +81,8 @@ const AppRequest = styled.div`
     }
   }
   .app__request-upvotes.clicked {
-   background-color: #4661E6;
-   color:#fff;
+    background-color: #4661e6;
+    color: #fff;
   }
   .app__request-details {
     h3 {

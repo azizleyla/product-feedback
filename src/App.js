@@ -6,11 +6,11 @@ import React, {
 } from "react";
 import data from "./data";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import RoadMap from "./Pages/RoadMap";
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import Modal from "./Pages/Modal";
-import FeedbackDetails from "./Pages/FeedbackDetails";
+import RoadMap from "./pages/RoadMap";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Modal from "./pages/Modal";
+import FeedbackDetails from "./pages/FeedbackDetails";
 import AuthContext from "./contexts/authContext";
 import DataContext from "./contexts/DataContext";
 
@@ -36,7 +36,7 @@ const App = () => {
   //   });
   //   setFeedbacks(newFeedbacks);
   // };
-
+  
   // const filterItems = (category) => {
   //   setActive(category);
   //   if (category === "All") {
