@@ -3,8 +3,15 @@ import styled from "styled-components";
 import Statistics from "./Statistics";
 import { allCategories } from "../data";
 import { StatusBtn } from "./Button";
+import { useHistory } from "react-router";
 
 const FeedbackBoard = ({ filterItems, feedbacks, active, logoutUser }) => {
+  const history = useHistory();
+  const logoutHandler = function () {
+    logoutUser();
+    history.push("/login");
+  };
+
   return (
     <AppFeedback>
       <div className="app__feedback-board">
@@ -16,14 +23,16 @@ const FeedbackBoard = ({ filterItems, feedbacks, active, logoutUser }) => {
           <StatusBtn
             key={index}
             type="button"
-            className={active === category ? "status-btn active" : "status-btn"}
+            className={
+              active === category ? "status-btn active" : "status-btn"
+            }
             onClick={() => filterItems(category)}
           >
             {category}
           </StatusBtn>
         ))}
       </div>
-      <Statistics feedbacks={feedbacks} logoutUser={logoutUser} />
+      <Statistics feedbacks={feedbacks} logoutUser={logoutHandler} />
     </AppFeedback>
   );
 };
@@ -59,5 +68,4 @@ const AppFeedback = styled.div`
       color: var(--color-white);
     }
   }
-
 `;

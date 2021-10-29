@@ -1,6 +1,5 @@
 import React from "react";
 import img1 from "../../../assets/user-images/image-james.jpg";
-import img2 from "../../../assets/user-images/image-roxanne.jpg";
 import styled from "styled-components";
 import Replies from "./Replies";
 

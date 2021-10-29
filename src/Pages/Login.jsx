@@ -5,17 +5,14 @@ import styled from "styled-components";
 import { PrimaryButton } from "../components/Button";
 import AuthContext from "../contexts/authContext";
 
-const URL =
-  "https://powerful-journey-13863.herokuapp.com/api/v1/auth/login";
-  
-const UPDATE_EMAIL = "UPDATE_EMAIL";
+const UPDATE_username = "UPDATE_username";
 const UPDATE_PASSWORD = "UPDATE_PASSWORD";
 
 const loginFormReducer = (state, action) => {
-  if (action.type === UPDATE_EMAIL) {
+  if (action.type === UPDATE_username) {
     return {
       ...state,
-      email: action.payload,
+      username: action.payload,
     };
   }
   if (action.type === UPDATE_PASSWORD) {
@@ -26,7 +23,7 @@ const loginFormReducer = (state, action) => {
   }
 
   return {
-    email: "",
+    username: "",
     password: "",
     password2: "",
   };
@@ -34,16 +31,16 @@ const loginFormReducer = (state, action) => {
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false);
-
+  const history = useHistory();
   const store = useContext(AuthContext);
 
   const [state, dispatch] = useReducer(loginFormReducer, {
-    email: "",
-    password: "",
+    username: "velvetround",
+    password: "123456789",
   });
 
-  const dispatchEmail = (e) => {
-    dispatch({ type: UPDATE_EMAIL, payload: e.target.value });
+  const dispatchusername = (e) => {
+    dispatch({ type: UPDATE_username, payload: e.target.value });
   };
 
   const dispatchPassword = (e) => {
@@ -54,23 +51,22 @@ const Login = () => {
   };
 
   async function submitForm() {
-    // const response = await axios({
-    //   method: 'post',
-    //   url: URL,
-    //   data: {
-    //     email: state.email,
-    //     password: state.password
-    //   }
-    // });
-    // if (response.data.status === 'success') {
-    //   history.push('/')
-    // }
-
-    if (!(state.email || state.password)) {
-      return;
+    const response = await axios({
+      method: "post",
+      url: "https://product-feedback-app-api.herokuapp.com/api/v1/auth/login",
+      data: {
+        username: state.username,
+        password: state.password,
+      },
+    });
+    if (response.data.status === "success") {
+      history.push("/");
+      store.onLogin(response.data.token, response.data.user);
     }
 
-    store.onLogin();
+    if (!(state.username || state.password)) {
+      return;
+    }
   }
 
   return (
@@ -82,8 +78,8 @@ const Login = () => {
           id="username"
           type="text"
           placeholder="Enter Username"
-          value={state.email}
-          onChange={dispatchEmail}
+          value={state.username}
+          onChange={dispatchusername}
         />
       </div>
       <div className="form-input">
@@ -109,17 +105,14 @@ const Login = () => {
         </div>
       )}
       <PrimaryButton
-        disabled={!(state.email && state.password)}
+        disabled={!(state.username && state.password)}
         w100
         type="submit"
         onClick={submitForm}
       >
         Login
       </PrimaryButton>
-      <button
-        onClick={() => setIsLogin(!isLogin)}
-        className="register-btn"
-      >
+      <button onClick={submitForm} className="register-btn">
         {!isLogin ? (
           <p>
             Don't have acoount? <span>Register</span>

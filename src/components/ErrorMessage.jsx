@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import errorImg from "../error.png";
-import StatusBtn, { PrimaryButton } from "./Button";
+import  { PrimaryButton } from "./Button";
 const ErrorMessage = () => {
   return (
     <ErrorMessageContainer>
