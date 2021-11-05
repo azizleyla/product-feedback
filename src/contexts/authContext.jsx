@@ -15,6 +15,8 @@ export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
 
+
+  
   useEffect(() => {
     const userString = localStorage.getItem("user");
     const user = JSON.parse(userString);

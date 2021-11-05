@@ -12,9 +12,9 @@ const Reply = ({ replyingTo, content }) => {
         <p>{content}</p>
       </div>
 
-      <div className="reply-btn">
+      {/* <div className="reply-btn">
         <button type="button">Reply</button>
-      </div>
+      </div> */}
     </div>
   );
 };

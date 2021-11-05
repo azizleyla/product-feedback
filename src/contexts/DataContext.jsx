@@ -1,5 +1,5 @@
 import cuid from "cuid";
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 import data from "../data";
 
 const DataContext = createContext({
@@ -7,30 +7,51 @@ const DataContext = createContext({
   user: {},
 });
 
-export const DataContextProvider = (props) => {
-  const [requests, setRequests] = useState(data.productRequests);
-  const [user, setUser] = useState(data.currentUser);
+const initialState = {
+  requests: data.productRequests,
+  user: data.currentUser,
+};
 
-  function addComment(comment, productId) {
-    const { content } = comment;
-
-    const request = requests.find((product) => {
-      return product.id === productId;
+function dataReducer(state, action) {
+  if (action.type === "ADD_COMMENT") {
+    const request = state.requests.find((product) => {
+      return product.id === action.payload.productId;
     });
 
+    console.log(action);
     request.comments.push({
       id: cuid(),
-      content,
-      user,
+      content: action.payload.content,
+      user: action.payload.user,
     });
 
-    setRequests([...requests]);
+    return {
+      ...state,
+      requests: [...state.requests],
+    };
+  }
+
+  return state;
+}
+
+export const DataContextProvider = (props) => {
+  const [state, dispatch] = useReducer(dataReducer, initialState);
+
+  function addComment(comment, productId) {
+    // const { content } = comment;
+    // const request = requests.find((product) => {
+    //   return product.id === productId;
+    // });
+    // request.comments.push({
+    //   id: cuid(),
+    //   content,
+    //   user,
+    // });
+    // setRequests([...requests]);
   }
 
   return (
-    <DataContext.Provider
-      value={{ requests: requests, user: user, addComment: addComment }}
-    >
+    <DataContext.Provider value={{ reducerState: state, dispatch }}>
       {props.children}
     </DataContext.Provider>
   );

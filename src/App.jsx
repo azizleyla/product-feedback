@@ -70,7 +70,7 @@ const App = () => {
   //     return setFeedbacks(sortedByComments);
   //   }
   // };
-
+  console.log(dataStore);
   return (
     <BrowserRouter>
       <Switch>
@@ -81,11 +81,11 @@ const App = () => {
             </Route>
             <Route path="/" exact>
               <Home
-                feedbacks={dataStore.requests}
+                feedbacks={dataStore.reducerState.requests}
                 // sortRequests={sortRequests}
                 // increaseVote={increaseVote}
                 active={active}
-                filterItems={dataStore.requests}
+                filterItems={dataStore.reducerState.requests}
               />
             </Route>
             <Route path="/newfeedback" exact>

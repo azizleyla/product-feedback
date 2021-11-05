@@ -13,7 +13,7 @@ const FeedbackDetails = () => {
   console.log(params.feedbackId);
   const data = useContext(DataContext);
 
-  const feedbackDetails = data.requests.find((request) => {
+  const feedbackDetails = data.reducerState.requests.find((request) => {
     return request.id === params.feedbackId;
   });
 

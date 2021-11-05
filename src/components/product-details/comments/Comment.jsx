@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import img1 from "../../../assets/user-images/image-james.jpg";
 import styled from "styled-components";
 import Replies from "./Replies";
+import { PrimaryButton } from "../../Button";
+import Textarea from "../../core/shared/Textarea";
 
 const Comment = ({ content, user, replies }) => {
+  const [isCommentReplyBoxOpen, setIsCommentReplyBoxOpen] =
+    useState(false);
+  const showReplyBox = () => {
+    setIsCommentReplyBoxOpen((s) => !s);
+  };
+
   return (
     <div style={{ width: "75rem", margin: "0 auto" }}>
       <CommentContainer
@@ -15,15 +23,24 @@ const Comment = ({ content, user, replies }) => {
             <img src={img1} alt="user" />
           </div>
           <div className="profile-details">
-            <h3>{user.name}</h3>
+            <h3>{user.name ? user.name : user.fullname}</h3>
             <span>{user.username}</span>
             <p>{content}</p>
+            {isCommentReplyBoxOpen && (
+              <div className="textarea-container">
+                <Textarea placeholder="Add reply..." />
+                <PrimaryButton>Post Reply</PrimaryButton>
+              </div>
+            )}
           </div>
 
           <div className="reply-btn">
-            <button type="button">Reply</button>
+            <button type="button" onClick={showReplyBox}>
+              Reply
+            </button>
           </div>
         </div>
+
         {replies && <Replies replies={replies} />}
       </CommentContainer>
     </div>
@@ -37,6 +54,15 @@ const CommentContainer = styled.div`
   margin-top: 10px;
 
   .profile-img {
+  }
+  .textarea-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 600px;
+    gap: 2rem;
+    padding-bottom: 3rem;
+    margin-top: 2.4rem;
   }
   .single-card,
   .reply {
@@ -56,6 +82,7 @@ const CommentContainer = styled.div`
     margin-right: 2rem;
   }
   .profile-details {
+    flex: 1;
     h3 {
       font-weight: bold;
       font-size: 14px;

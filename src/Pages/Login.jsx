@@ -53,7 +53,7 @@ const Login = () => {
   async function submitForm() {
     const response = await axios({
       method: "post",
-      url: "https://product-feedback-app-api.herokuapp.com/api/v1/auth/login",
+      url: `${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`,
       data: {
         username: state.username,
         password: state.password,

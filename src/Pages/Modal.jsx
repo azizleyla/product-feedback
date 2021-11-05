@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
 import data from "../data";
+
 const allCategories = [
   ...new Set([
     "UI",
