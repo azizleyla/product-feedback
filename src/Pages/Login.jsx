@@ -4,7 +4,9 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import { PrimaryButton } from "../components/Button";
 import AuthContext from "../contexts/authContext";
-
+import { useForm } from "react-hook-form";
+import { login } from "../redux/reducers/user.actions";
+import { useDispatch } from "react-redux";
 const UPDATE_username = "UPDATE_username";
 const UPDATE_PASSWORD = "UPDATE_PASSWORD";
 
@@ -30,47 +32,52 @@ const loginFormReducer = (state, action) => {
 };
 
 const Login = () => {
+  const { register, handleSubmit } = useForm();
+
   const [isLogin, setIsLogin] = useState(false);
   const history = useHistory();
   const store = useContext(AuthContext);
+  const dispatch = useDispatch();
 
-  const [state, dispatch] = useReducer(loginFormReducer, {
-    username: "velvetround",
-    password: "123456789",
-  });
+  // const [state, dispatch] = useReducer(loginFormReducer, {
+  //   username: "velvetround",
+  //   password: "123456789",
+  // });
 
-  const dispatchusername = (e) => {
-    dispatch({ type: UPDATE_username, payload: e.target.value });
-  };
+  // const dispatchusername = (e) => {
+  //   dispatch({ type: UPDATE_username, payload: e.target.value });
+  // };
 
-  const dispatchPassword = (e) => {
-    dispatch({
-      type: UPDATE_PASSWORD,
-      payload: e.target.value,
-    });
-  };
+  // const dispatchPassword = (e) => {
+  //   dispatch({
+  //     type: UPDATE_PASSWORD,
+  //     payload: e.target.value,
+  //   });
+  // };
 
-  async function submitForm() {
+  async function onSubmit(data) {
     const response = await axios({
       method: "post",
       url: `${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`,
       data: {
-        username: state.username,
-        password: state.password,
+        username: data.username,
+        password: data.password,
       },
     });
+
     if (response.data.status === "success") {
+      dispatch(login(response.data.user, response.data.token));
       history.push("/");
-      store.onLogin(response.data.token, response.data.user);
+      // store.onLogin(response.data.token, response.data.user);
     }
 
-    if (!(state.username || state.password)) {
-      return;
-    }
+    // if (!(data.username || data.password)) {
+    //   return;
+    // }
   }
 
   return (
-    <FormContainer>
+    <FormContainer handleSubmit={handleSubmit(onSubmit)}>
       <h3>Login</h3>
       <div className="form-input">
         <label htmlFor="username">Username</label>
@@ -78,8 +85,8 @@ const Login = () => {
           id="username"
           type="text"
           placeholder="Enter Username"
-          value={state.username}
-          onChange={dispatchusername}
+          defaultValue="velvetround"
+          {...register("username")}
         />
       </div>
       <div className="form-input">
@@ -88,8 +95,8 @@ const Login = () => {
           id="password"
           type="password"
           placeholder="Enter password"
-          value={state.password}
-          onChange={dispatchPassword}
+          defaultValue="123456789"
+          {...register("password")}
         />
       </div>
       {isLogin && (
@@ -99,20 +106,19 @@ const Login = () => {
             id="password-confirm"
             type="password"
             placeholder="Confirm password"
-            value={state.password}
-            onChange={dispatchPassword}
+            {...register("password")}
           />
         </div>
       )}
       <PrimaryButton
-        disabled={!(state.username && state.password)}
+        // disabled={!(state.username && state.password)}
         w100
         type="submit"
-        onClick={submitForm}
+        onClick={handleSubmit(onSubmit)}
       >
         Login
       </PrimaryButton>
-      <button onClick={submitForm} className="register-btn">
+      <button onClick={onSubmit} className="register-btn">
         {!isLogin ? (
           <p>
             Don't have acoount? <span>Register</span>
@@ -127,7 +133,7 @@ const Login = () => {
 
 export default Login;
 
-export const FormContainer = styled.div`
+export const FormContainer = styled.form`
   max-width: 540px;
   margin: 0 auto;
   margin-top: 10rem;

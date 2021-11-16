@@ -7,13 +7,15 @@ import Modal from "./pages/Modal";
 import FeedbackDetails from "./pages/FeedbackDetails";
 import AuthContext from "./contexts/authContext";
 import DataContext from "./contexts/dataContext";
+import { useSelector } from "react-redux";
 
 const App = () => {
   // const [feedbacks, setFeedbacks] = useState(data.productRequests);
   const [active, setActive] = useState("All");
-  const store = useContext(AuthContext);
+  // const store = useContext(AuthContext);
   const dataStore = useContext(DataContext);
-  console.log(store);
+  const state = useSelector((state) => state);
+  console.log(state);
   // const increaseVote = (id) => {
   //   const newFeedbacks = feedbacks.map((feedback) => {
   //     console.log(id);
@@ -74,7 +76,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {store.user.token ? (
+        {state.token ? (
           <>
             <Route path="/roadmap">
               <RoadMap feedbacks={dataStore.requests} />
