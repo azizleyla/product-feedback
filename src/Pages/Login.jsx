@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useContext, useReducer, useState } from "react";
+import React, {  useReducer, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { PrimaryButton } from "../components/Button";
-import AuthContext from "../contexts/authContext";
 import { useForm } from "react-hook-form";
 import { login } from "../redux/reducers/user.actions";
 import { useDispatch } from "react-redux";
@@ -36,24 +35,9 @@ const Login = () => {
 
   const [isLogin, setIsLogin] = useState(false);
   const history = useHistory();
-  const store = useContext(AuthContext);
+
   const dispatch = useDispatch();
 
-  // const [state, dispatch] = useReducer(loginFormReducer, {
-  //   username: "velvetround",
-  //   password: "123456789",
-  // });
-
-  // const dispatchusername = (e) => {
-  //   dispatch({ type: UPDATE_username, payload: e.target.value });
-  // };
-
-  // const dispatchPassword = (e) => {
-  //   dispatch({
-  //     type: UPDATE_PASSWORD,
-  //     payload: e.target.value,
-  //   });
-  // };
 
   async function onSubmit(data) {
     const response = await axios({

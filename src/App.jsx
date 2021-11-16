@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Modal from "./pages/Modal";
 import FeedbackDetails from "./pages/FeedbackDetails";
-import AuthContext from "./contexts/authContext";
 import DataContext from "./contexts/dataContext";
 import { useSelector } from "react-redux";
 
