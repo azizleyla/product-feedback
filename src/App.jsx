@@ -1,22 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import RoadMap from "./pages/RoadMap";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Modal from "./pages/Modal";
 import FeedbackDetails from "./pages/FeedbackDetails";
-import DataContext from "./contexts/dataContext";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/slices/authSlice";
+
 const App = () => {
-  // const [feedbacks, setFeedbacks] = useState(data.productRequests);
-  const [active, setActive] = useState("All");
+  const [active] = useState("All");
   const dispatch = useDispatch();
-  const dataStore = useContext(DataContext);
   const authState = useSelector((state) => state.auth);
   const feedbackState = useSelector((state) => state.feedback2);
-  console.log(feedbackState);
+
   useEffect(() => {
     const userString = localStorage.getItem("user");
     if (!userString) return;
@@ -35,15 +33,15 @@ const App = () => {
         {authState.user.token ? (
           <>
             <Route path="/roadmap">
-              <RoadMap feedbacks={dataStore.requests} />
+              <RoadMap feedbacks={feedbackState.feedbacks} />
             </Route>
             <Route path="/" exact>
               <Home
-                feedbacks={dataStore.reducerState.requests}
+                feedbacks={feedbackState.feedbacks}
                 // sortRequests={sortRequests}
                 // increaseVote={increaseVote}
                 active={active}
-                filterItems={dataStore.reducerState.requests}
+                filterItems={feedbackState.feedbacks}
               />
             </Route>
             <Route path="/newfeedback" exact>

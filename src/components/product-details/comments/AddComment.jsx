@@ -1,13 +1,10 @@
 import styled from "styled-components";
-import React, { useContext } from "react";
+import React from "react";
 import { PrimaryButton } from "../../Button";
 import { useState } from "react";
-import DataContext from "../../../contexts/dataContext";
 import Textarea from "../../core/shared/Textarea";
 
 function AddComment({ requestId }) {
-  const { dispatch } = useContext(DataContext);
-
   const [commentInput, setCommentInput] = useState("");
   const [error, setError] = useState(false);
   function submitForm() {
