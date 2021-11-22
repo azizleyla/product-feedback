@@ -14,8 +14,8 @@ const App = () => {
   const [active, setActive] = useState("All");
   const dispatch = useDispatch();
   const dataStore = useContext(DataContext);
-  const state = useSelector((state) => state);
-  
+  const authState = useSelector((state) => state.auth);
+  console.log(authState);
   useEffect(() => {
     const userString = localStorage.getItem("user");
     if (!userString) return;
@@ -31,7 +31,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        {state.user.token ? (
+        {authState.user.token ? (
           <>
             <Route path="/roadmap">
               <RoadMap feedbacks={dataStore.requests} />
