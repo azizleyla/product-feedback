@@ -15,7 +15,7 @@ const App = () => {
   const dispatch = useDispatch();
   const dataStore = useContext(DataContext);
   const state = useSelector((state) => state);
-  console.log(state);
+  
   useEffect(() => {
     const userString = localStorage.getItem("user");
     if (!userString) return;
