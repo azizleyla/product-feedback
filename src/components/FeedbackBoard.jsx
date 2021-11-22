@@ -4,11 +4,16 @@ import Statistics from "./Statistics";
 import { allCategories } from "../data";
 import { StatusBtn } from "./Button";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/slices/authSlice";
 
-const FeedbackBoard = ({ filterItems, feedbacks, active, logoutUser }) => {
+const FeedbackBoard = ({ filterItems, feedbacks, active }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const logoutHandler = function () {
-    logoutUser();
+    console.log("logoutHandler");
+    dispatch(logoutUser());
     history.push("/login");
   };
 

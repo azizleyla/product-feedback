@@ -1,34 +1,35 @@
 import axios from "axios";
-import React, {  useReducer, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { PrimaryButton } from "../components/Button";
 import { useForm } from "react-hook-form";
-import { login } from "../redux/reducers/user.actions";
+// import { login } from "../redux/reducers/user.actions";
 import { useDispatch } from "react-redux";
-const UPDATE_username = "UPDATE_username";
-const UPDATE_PASSWORD = "UPDATE_PASSWORD";
+import { loginUser } from "../redux/slices/authSlice";
+// const UPDATE_username = "UPDATE_username";
+// const UPDATE_PASSWORD = "UPDATE_PASSWORD";
 
-const loginFormReducer = (state, action) => {
-  if (action.type === UPDATE_username) {
-    return {
-      ...state,
-      username: action.payload,
-    };
-  }
-  if (action.type === UPDATE_PASSWORD) {
-    return {
-      ...state,
-      password: action.payload,
-    };
-  }
+// const loginFormReducer = (state, action) => {
+//   if (action.type === UPDATE_username) {
+//     return {
+//       ...state,
+//       username: action.payload,
+//     };
+//   }
+//   if (action.type === UPDATE_PASSWORD) {
+//     return {
+//       ...state,
+//       password: action.payload,
+//     };
+//   }
 
-  return {
-    username: "",
-    password: "",
-    password2: "",
-  };
-};
+//   return {
+//     username: "",
+//     password: "",
+//     password2: "",
+//   };
+// };
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -37,7 +38,6 @@ const Login = () => {
   const history = useHistory();
 
   const dispatch = useDispatch();
-
 
   async function onSubmit(data) {
     const response = await axios({
@@ -50,7 +50,12 @@ const Login = () => {
     });
 
     if (response.data.status === "success") {
-      dispatch(login(response.data.user, response.data.token));
+      dispatch(
+        loginUser({
+          user: response.data.user,
+          token: response.data.token,
+        }),
+      );
       history.push("/");
       // store.onLogin(response.data.token, response.data.user);
     }

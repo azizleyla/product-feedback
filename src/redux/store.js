@@ -1,4 +1,5 @@
 import { createStore } from "redux";
-import { userReducer } from "./reducers/user.reducers";
+import authSlice from "./slices/authSlice";
 
-export const store = createStore(userReducer);
+
+export const store = createStore(authSlice);

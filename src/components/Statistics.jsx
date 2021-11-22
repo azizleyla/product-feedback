@@ -45,20 +45,20 @@ const StatisticsStyled = styled.div`
   }
 `;
 
-function Statistics({ feedbacks }) {
+function Statistics({ feedbacks, logoutUser }) {
   const store = useContext(AuthContext);
   console.log(store);
 
   const planned = feedbacks.filter(
-    (feedback) => feedback.status === "planned"
+    (feedback) => feedback.status === "planned",
   ).length;
 
   const live = feedbacks.filter(
-    (feedback) => feedback.status === "live"
+    (feedback) => feedback.status === "live",
   ).length;
 
   const inProgress = feedbacks.filter(
-    (feedback) => feedback.status === "in-progress"
+    (feedback) => feedback.status === "in-progress",
   ).length;
   return (
     <StatisticsStyled>
@@ -82,7 +82,7 @@ function Statistics({ feedbacks }) {
           <span className="count-live">{live}</span>
         </div>
       </div>
-      <PrimaryButton w100 onClick={store.onLogout}>
+      <PrimaryButton w100 onClick={logoutUser}>
         Log out
       </PrimaryButton>
     </StatisticsStyled>
