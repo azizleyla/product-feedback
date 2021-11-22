@@ -3,27 +3,14 @@ import React, { useContext } from "react";
 import { PrimaryButton } from "../../Button";
 import { useState } from "react";
 import DataContext from "../../../contexts/dataContext";
-import AuthContext from "../../../contexts/authContext";
 import Textarea from "../../core/shared/Textarea";
 
 function AddComment({ requestId }) {
   const { dispatch } = useContext(DataContext);
-  const { user } = useContext(AuthContext);
 
   const [commentInput, setCommentInput] = useState("");
   const [error, setError] = useState(false);
-  console.log(commentInput);
   function submitForm() {
-    // addComment({ content: commentInput }, requestId);
-    // setCommentInput("");
-    dispatch({
-      type: "ADD_COMMENT",
-      payload: {
-        content: commentInput,
-        productId: requestId,
-        user: user,
-      },
-    });
     setCommentInput("");
   }
 

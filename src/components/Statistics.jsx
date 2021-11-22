@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import AuthContext from "../contexts/authContext";
 import { PrimaryButton } from "./Button";
 
 const StatisticsStyled = styled.div`
@@ -46,9 +45,6 @@ const StatisticsStyled = styled.div`
 `;
 
 function Statistics({ feedbacks, logoutUser }) {
-  const store = useContext(AuthContext);
-  console.log(store);
-
   const planned = feedbacks.filter(
     (feedback) => feedback.status === "planned",
   ).length;
