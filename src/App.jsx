@@ -15,7 +15,8 @@ const App = () => {
   const dispatch = useDispatch();
   const dataStore = useContext(DataContext);
   const authState = useSelector((state) => state.auth);
-  console.log(authState);
+  const feedbackState = useSelector((state) => state.feedback2);
+  console.log(feedbackState);
   useEffect(() => {
     const userString = localStorage.getItem("user");
     if (!userString) return;
