@@ -35,3 +35,15 @@ export const PrimaryButton = styled.button`
     color: #666666;
   }
 `;
+
+export const DeleteBtn = styled.button`
+  background: #e98888;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: #f2f4fe;
+`;

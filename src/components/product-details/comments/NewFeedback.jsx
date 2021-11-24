@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
-import data from "../data";
+import data from "../../../data";
+
 
 export const allCategories = [
   ...new Set([
@@ -10,47 +11,46 @@ export const allCategories = [
     ...data.productRequests.map((item) => item.category),
   ]),
 ];
-
-const Modal = () => {
+const NewFeedback = () => {
   return (
-    <ModalContainer>
-      <h3>Create new feedback</h3>
-      <div className="input-field">
-        <span>Feedback Title</span>
-        <label>Add a short, descriptive headline</label>
-        <input type="text" />
-      </div>
-      <div className="input-field">
-        <span>Category</span>
-        <label>Choose a category for your feedback</label>
-        <select>
-          {allCategories.map((item) => {
-            return <option value={item}>{item}</option>;
-          })}
-        </select>
-      </div>
-      <div className="input-field">
-        <span>Feedback Detail</span>
-        <label>
-          Include any specific comments on what should be improved, added,
-          etc.
-        </label>
-        <textarea rows="5" cols="10"></textarea>
-      </div>
-      <div className="btn-container">
-        <Link to="/">
-          <button type="button" className="cancel-btn">
-            Cancel
-          </button>
-        </Link>
+    <div>
+      <ModalContainer>
+        <h3>Create new feedback</h3>
+        <div className="input-field">
+          <span>Feedback Title</span>
+          <label>Add a short, descriptive headline</label>
+          <input type="text" />
+        </div>
+        <div className="input-field">
+          <span>Category</span>
+          <label>Choose a category for your feedback</label>
+          <select>
+            {allCategories.map((item) => {
+              return <option value={item}>{item}</option>;
+            })}
+          </select>
+        </div>
+        <div className="input-field">
+          <span>Feedback Detail</span>
+          <label>
+            Include any specific comments on what should be improved,
+            added, etc.
+          </label>
+          <textarea rows="5" cols="10"></textarea>
+        </div>
+        <div className="btn-container">
+          <Link to="/">
+            <button type="button" className="cancel-btn">
+              Cancel
+            </button>
+          </Link>
 
-        <button className="add-feedback">Add Feedback</button>
-      </div>
-    </ModalContainer>
+          <button className="add-feedback">Add Feedback</button>
+        </div>
+      </ModalContainer>
+    </div>
   );
 };
-
-export default Modal;
 
 const ModalContainer = styled.div`
   padding: 4rem;
@@ -104,3 +104,5 @@ const ModalContainer = styled.div`
     margin-top: 3rem;
   }
 `;
+
+export default NewFeedback;

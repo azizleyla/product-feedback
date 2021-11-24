@@ -8,6 +8,8 @@ import FeedbackDetails from "./pages/FeedbackDetails";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/slices/authSlice";
+import EditFeedback from "./pages/EditFeedback";
+import NewFeedback from "./components/product-details/comments/NewFeedback";
 
 const App = () => {
   const [active] = useState("All");
@@ -35,6 +37,9 @@ const App = () => {
             <Route path="/roadmap">
               <RoadMap feedbacks={feedbackState.feedbacks} />
             </Route>
+            <Route path="/edit">
+              <EditFeedback />
+            </Route>
             <Route path="/" exact>
               <Home
                 feedbacks={feedbackState.feedbacks}
@@ -45,7 +50,7 @@ const App = () => {
               />
             </Route>
             <Route path="/newfeedback" exact>
-              <Modal />
+              <NewFeedback />
             </Route>
             <Route path="/feedbacks/:feedbackId" exact>
               <FeedbackDetails />
