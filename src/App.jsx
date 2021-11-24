@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/slices/authSlice";
 import EditFeedback from "./pages/EditFeedback";
 import NewFeedback from "./components/product-details/comments/NewFeedback";
+import axios from "axios";
+import { loadFeedbacks } from "./redux/slices/feedbackSlice";
 
 const App = () => {
   const [active] = useState("All");
@@ -27,6 +29,21 @@ const App = () => {
         token: user.token,
       }),
     );
+  }, [dispatch]);
+
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get(
+        "https://product-feedback-app-api.herokuapp.com/api/v1/requests",
+      );
+
+      dispatch(
+        loadFeedbacks({
+          feedbacks: response.data.requests,
+        }),
+      );
+    }
+    getData();
   }, [dispatch]);
 
   return (

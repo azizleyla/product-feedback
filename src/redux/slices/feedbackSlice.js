@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import data from "../../data";
 
 const initialState = {
-  feedbacks: [...data.productRequests],
+  feedbacks: [],
 };
 
 const feedbackSlice = createSlice({
   name: "feedback",
   initialState,
-  reducers: {},
+  reducers: {
+    loadFeedbacks(state, action) {
+      state.feedbacks = action.payload.feedbacks;
+    },
+  },
 });
 
-// export const {} = feedbackSlice.actions;
+export const { loadFeedbacks } = feedbackSlice.actions;
 export default feedbackSlice.reducer;
