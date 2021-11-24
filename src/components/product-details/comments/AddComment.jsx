@@ -3,10 +3,12 @@ import React from "react";
 import { PrimaryButton } from "../../Button";
 import { useState } from "react";
 import Textarea from "../../core/shared/Textarea";
+import { Link } from "react-router-dom";
 
 function AddComment({ requestId }) {
   const [commentInput, setCommentInput] = useState("");
   const [error, setError] = useState(false);
+  const [action, setAction] = useState("");
   function submitForm() {
     setCommentInput("");
   }
@@ -23,7 +25,15 @@ function AddComment({ requestId }) {
 
   return (
     <AddCommentStyled hasError={error}>
-      <h2>Add Comment</h2>
+      <div className="top">
+        <h2>Add Comment</h2>
+        <Link to="/edit">
+          <PrimaryButton onClick={() => setAction("edit")}>
+            Edit feedback
+          </PrimaryButton>
+        </Link>
+      </div>
+
       <Textarea
         placeholder="Add comment..."
         value={commentInput}
@@ -46,7 +56,11 @@ const AddCommentStyled = styled.div`
   border-radius: 10px;
   padding: 24px 32px 32px 32px;
   margin-bottom: 127px;
-
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   h2 {
     font-family: inherit;
     font-style: normal;
@@ -64,6 +78,7 @@ const AddCommentFooter = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 16px;
+
   p {
     font-family: inherit;
     font-style: normal;
