@@ -3,15 +3,13 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import RoadMap from "./pages/RoadMap";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Modal from "./pages/Modal";
 import FeedbackDetails from "./pages/FeedbackDetails";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/slices/authSlice";
 import EditFeedback from "./pages/EditFeedback";
 import NewFeedback from "./components/product-details/comments/NewFeedback";
-import axios from "axios";
-import { loadFeedbacks } from "./redux/slices/feedbackSlice";
+import { loadFeedbacksStart } from "./redux/slices/feedbackSlice";
 
 const App = () => {
   const [active] = useState("All");
@@ -32,18 +30,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    async function getData() {
-      const response = await axios.get(
-        "https://product-feedback-app-api.herokuapp.com/api/v1/requests",
-      );
-
-      dispatch(
-        loadFeedbacks({
-          feedbacks: response.data.requests,
-        }),
-      );
-    }
-    getData();
+    dispatch(loadFeedbacksStart());
   }, [dispatch]);
 
   return (
