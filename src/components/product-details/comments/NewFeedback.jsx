@@ -2,7 +2,14 @@ import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
 import data from "../../../data";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { addFeedback } from "../../../redux/slices/feedbackSlice";
+import { useHistory } from "react-router";
+import axios from "axios";
 
+const URL =
+  "https://product-feedback-app-api.herokuapp.com/api/v1/requests";
 
 export const allCategories = [
   ...new Set([
@@ -12,22 +19,54 @@ export const allCategories = [
   ]),
 ];
 const NewFeedback = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      category: "UI",
+      detail: "",
+    },
+    onSubmit: (values) => {
+      const updateData = async () => {
+        const response = await axios.post(URL, {
+          title: values.title,
+          category: values.category,
+          description: values.detail,
+        });
+        if (response.data.status === "success") {
+          history.push("/");
+        }
+      };
+      updateData();
+    },
+  });
   return (
     <div>
-      <ModalContainer>
+      <CreateNewFeedback onSubmit={formik.handleSubmit}>
         <h3>Create new feedback</h3>
         <div className="input-field">
           <span>Feedback Title</span>
           <label>Add a short, descriptive headline</label>
-          <input type="text" />
+          <input
+            id="title"
+            name="title"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.title}
+          />
         </div>
         <div className="input-field">
           <span>Category</span>
           <label>Choose a category for your feedback</label>
-          <select>
-            {allCategories.map((item) => {
-              return <option value={item}>{item}</option>;
-            })}
+          <select
+            name="category"
+            value={formik.values.category}
+            onChange={formik.handleChange}
+          >
+            {allCategories.map((category) => (
+              <option value={category}>{category}</option>
+            ))}
           </select>
         </div>
         <div className="input-field">
@@ -36,7 +75,13 @@ const NewFeedback = () => {
             Include any specific comments on what should be improved,
             added, etc.
           </label>
-          <textarea rows="5" cols="10"></textarea>
+          <textarea
+            name="detail"
+            value={formik.values.detail}
+            onChange={formik.handleChange}
+            rows="5"
+            cols="10"
+          ></textarea>
         </div>
         <div className="btn-container">
           <Link to="/">
@@ -47,12 +92,12 @@ const NewFeedback = () => {
 
           <button className="add-feedback">Add Feedback</button>
         </div>
-      </ModalContainer>
+      </CreateNewFeedback>
     </div>
   );
 };
 
-const ModalContainer = styled.div`
+const CreateNewFeedback = styled.form`
   padding: 4rem;
   max-width: 54rem;
   background-color: #fff;
@@ -106,3 +151,6 @@ const ModalContainer = styled.div`
 `;
 
 export default NewFeedback;
+
+function updateData() {}
+const u = () => {};
