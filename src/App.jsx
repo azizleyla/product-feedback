@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/slices/authSlice";
 import EditFeedback from "./pages/EditFeedback";
 import NewFeedback from "./components/product-details/comments/NewFeedback";
+import { loadFeedbacksStart } from "./redux/slices/feedbackSlice";
 
 const App = () => {
   const [active] = useState("All");
@@ -29,6 +30,9 @@ const App = () => {
     );
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   dispatch(loadFeedbacksStart());
+  // }, [dispatch]);
 
   return (
     <BrowserRouter>
