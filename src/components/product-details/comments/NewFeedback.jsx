@@ -9,6 +9,8 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import * as Yup from "yup";
 import { FormikInputError } from "../../FormikInputError";
+import { GoBackBtn } from "../../Button";
+import IconArrowLeft from "../../../assets/shared/icon-arrow-left.svg";
 
 const URL =
   "https://product-feedback-app-api.herokuapp.com/api/v1/requests";
@@ -58,7 +60,11 @@ const NewFeedback = () => {
   const detailError = formik.errors.detail;
 
   return (
-    <div>
+    <div className="new-feedback-container">
+      <div className="btn-container">
+        <img src={IconArrowLeft} alt="icon" />
+        <GoBackBtn to="/">Go Back</GoBackBtn>
+      </div>
       <CreateNewFeedback onSubmit={formik.handleSubmit}>
         <h3>Create new feedback</h3>
         <div className="input-field">
@@ -124,10 +130,7 @@ const NewFeedback = () => {
 
 const CreateNewFeedback = styled.form`
   padding: 5.2rem 4.2rem 4.2rem 4.2rem;
-  max-width: 54rem;
   background-color: #fff;
-  margin: 0 auto;
-  margin-top: 4rem;
   border-radius: 10px;
   h3 {
     font-weight: bold;
@@ -153,15 +156,15 @@ const CreateNewFeedback = styled.form`
     background: #f7f8fd;
     border: none;
     border-radius: 5px;
-    border:1px solid transparent;
+    border: 1px solid transparent;
     line-height: 20px;
   }
-  textarea{
+  textarea {
     &.error {
       border: 1px solid #d73737;
     }
   }
-  }
+
   input {
     &.error {
       border: 1px solid #d73737;

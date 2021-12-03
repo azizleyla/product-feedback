@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 export const StatusBtn = styled.button`
   background-color: #f2f4ff;
   padding: 0.5rem 1.6rem;
@@ -46,4 +46,13 @@ export const DeleteBtn = styled.button`
   line-height: 20px;
 
   color: #f2f4fe;
+`;
+export const GoBackBtn = styled(Link)`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #647196;
+  margin: 9.2rem 0 6.8rem 1.5rem;
+  display: inline-block;
 `;
