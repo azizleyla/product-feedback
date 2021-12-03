@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { addFeedback } from "../../../redux/slices/feedbackSlice";
 import { useHistory } from "react-router";
 import axios from "axios";
+import * as Yup from "yup";
+import { FormikInputError } from "../../FormikInputError";
 
 const URL =
   "https://product-feedback-app-api.herokuapp.com/api/v1/requests";
@@ -27,6 +29,15 @@ const NewFeedback = () => {
       category: "UI",
       detail: "",
     },
+    validationSchema: Yup.object({
+      title: Yup.string()
+        .min(3, "Must be 3 characters or more")
+        .required("Can't be empty"),
+      category: Yup.string(),
+      detail: Yup.string()
+        .max(50, "Must be 15 characters or less")
+        .required("Can't be empty"),
+    }),
     onSubmit: (values) => {
       const updateData = async () => {
         const response = await axios.post(URL, {
@@ -41,6 +52,11 @@ const NewFeedback = () => {
       updateData();
     },
   });
+  const hasTitleError = formik.touched.title && formik.errors.title;
+  const titleError = formik.errors.title;
+  const hasDetailError = formik.touched.detail && formik.errors.detail;
+  const detailError = formik.errors.detail;
+
   return (
     <div>
       <CreateNewFeedback onSubmit={formik.handleSubmit}>
@@ -54,7 +70,13 @@ const NewFeedback = () => {
             type="text"
             onChange={formik.handleChange}
             value={formik.values.title}
+            className={hasTitleError ? "error" : ""}
           />
+          {hasTitleError ? (
+            <FormikInputError className={hasTitleError && "show-error"}>
+              {titleError}
+            </FormikInputError>
+          ) : null}
         </div>
         <div className="input-field">
           <span>Category</span>
@@ -81,7 +103,11 @@ const NewFeedback = () => {
             onChange={formik.handleChange}
             rows="5"
             cols="10"
+            className={hasDetailError ? "error" : ""}
           ></textarea>
+          {hasDetailError ? (
+            <FormikInputError>{detailError}</FormikInputError>
+          ) : null}
         </div>
         <div className="btn-container">
           <Link to="/">
@@ -89,7 +115,6 @@ const NewFeedback = () => {
               Cancel
             </button>
           </Link>
-
           <button className="add-feedback">Add Feedback</button>
         </div>
       </CreateNewFeedback>
@@ -98,11 +123,12 @@ const NewFeedback = () => {
 };
 
 const CreateNewFeedback = styled.form`
-  padding: 4rem;
+  padding: 5.2rem 4.2rem 4.2rem 4.2rem;
   max-width: 54rem;
   background-color: #fff;
   margin: 0 auto;
   margin-top: 4rem;
+  border-radius: 10px;
   h3 {
     font-weight: bold;
     font-size: 24px;
@@ -110,12 +136,14 @@ const CreateNewFeedback = styled.form`
     /* identical to box height */
     text-transform: capitalize;
     letter-spacing: -0.333333px;
-
+    margin-bottom: 4rem;
     color: #3a4374;
   }
   .input-field {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2.4rem;
+    position: relative;
   }
   input,
   textarea,
@@ -124,13 +152,27 @@ const CreateNewFeedback = styled.form`
     outline: none;
     background: #f7f8fd;
     border: none;
+    border-radius: 5px;
+    border:1px solid transparent;
+    line-height: 20px;
+  }
+  textarea{
+    &.error {
+      border: 1px solid #d73737;
+    }
+  }
+  }
+  input {
+    &.error {
+      border: 1px solid #d73737;
+    }
   }
   label {
     margin-top: 0.2rem;
+    margin-bottom: 1.6rem;
     font-weight: normal;
     font-size: 14px;
     line-height: 20px;
-    margin-bottom: 1.6rem;
     display: inline-block;
     color: #647196;
   }
@@ -148,9 +190,12 @@ const CreateNewFeedback = styled.form`
     gap: 1.5rem;
     margin-top: 3rem;
   }
+  .error {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #d73737;
+  }
 `;
 
 export default NewFeedback;
-
-function updateData() {}
-const u = () => {};

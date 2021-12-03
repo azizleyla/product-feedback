@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import RequestBoard from "../components/RequestBoard";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { loadFeedback } from "../redux/slices/feedbackSlice";
+import { loadFeedbacks } from "../redux/slices/feedbackSlice";
 
 const Home = ({
   active,
@@ -24,7 +24,7 @@ const Home = ({
       );
       const data = response.data.requests;
       dispatch(
-        loadFeedback({
+        loadFeedbacks({
           feedbacks: data,
         }),
       );
