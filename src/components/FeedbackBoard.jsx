@@ -6,8 +6,9 @@ import { StatusBtn } from "./Button";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/slices/authSlice";
+import { filterFeedbacks } from "../redux/slices/feedbackSlice";
 
-const FeedbackBoard = ({ filterItems, feedbacks, active }) => {
+const FeedbackBoard = ({ feedbacks, active }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -31,7 +32,7 @@ const FeedbackBoard = ({ filterItems, feedbacks, active }) => {
             className={
               active === category ? "status-btn active" : "status-btn"
             }
-            onClick={() => filterItems(category)}
+            onClick={() => dispatch(filterFeedbacks(category))}
           >
             {category}
           </StatusBtn>

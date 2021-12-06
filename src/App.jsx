@@ -16,6 +16,8 @@ const App = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const feedbackState = useSelector((state) => state.feedback2);
+  const feedbacks = useSelector((state) => state.feedbacks);
+
 
 
   useEffect(() => {

@@ -1,17 +1,23 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useEffect } from "react";
 import { PrimaryButton } from "../../Button";
 import { useState } from "react";
 import Textarea from "../../core/shared/Textarea";
 import { Link } from "react-router-dom";
+import { loadFeedbackStart } from "../../../redux/slices/feedbackSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function AddComment({ requestId }) {
   const [commentInput, setCommentInput] = useState("");
   const [error, setError] = useState(false);
   const [action, setAction] = useState("");
+  const singleProduct = useSelector((state) => state.singleFeedback);
+  console.log(singleProduct);
+
   function submitForm() {
     setCommentInput("");
   }
+
 
   function changeInput(e) {
     if (e.target.value.length > 250) {
