@@ -16,6 +16,7 @@ const feedbackSlice = createSlice({
       console.log(action);
       state.feedbacks = action.payload.feedbacks;
     },
+
     loadFeedback(state, action) {
       state.singleFeedback = action.payload.singleFeedback;
       console.log(action.payload.singleFeedback);

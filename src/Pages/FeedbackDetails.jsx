@@ -10,15 +10,18 @@ import axios from "axios";
 
 const FeedbackDetails = () => {
   const params = useParams();
-  const { data, isLoading } = useQuery("feedback", () => {
-    async function getData() {
-      const response = await axios.get(
-        `https://product-feedback-app-api.herokuapp.com/api/v1/requests/${params.feedbackId}`,
-      );
-      return response.data;
-    }
-    return getData();
-  });
+  const { data, isLoading } = useQuery(
+    ["feedback", params.feedbackId],
+    () => {
+      async function getData() {
+        const response = await axios.get(
+          `https://product-feedback-app-api.herokuapp.com/api/v1/requests/${params.feedbackId}`,
+        );
+        return response.data;
+      }
+      return getData();
+    },
+  );
 
   // const feedback = useSelector((state) => state.feedback2.singleFeedback);
 
@@ -32,7 +35,7 @@ const FeedbackDetails = () => {
   // }, [dispatch, params.feedbackId]);
 
   if (isLoading) {
-    return "loading";
+    return <div className="loader2"></div>;
   }
   console.log(data.data);
   return (

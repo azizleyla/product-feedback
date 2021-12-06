@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { PrimaryButton } from "./Button";
 
@@ -44,7 +45,9 @@ const StatisticsStyled = styled.div`
   }
 `;
 
-function Statistics({ feedbacks, logoutUser }) {
+function Statistics({ logoutUser }) {
+  const feedbacks = useSelector((state) => state.feedback2.feedbacks);
+
   const planned = feedbacks.filter(
     (feedback) => feedback.status === "planned",
   ).length;
