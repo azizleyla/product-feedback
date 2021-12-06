@@ -19,7 +19,7 @@ const FeedbackDetails = () => {
 
   useEffect(() => {
     dispatch(loadFeedbackStart(params.feedbackId));
-  }, [dispatch]);
+  }, [dispatch, params.feedbackId]);
   return (
     <AppRequestsContainer>
       <Feedback {...feedback} />
