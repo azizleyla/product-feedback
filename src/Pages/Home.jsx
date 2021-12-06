@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import RequestBoard from "../components/RequestBoard";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { loadFeedbacks } from "../redux/slices/feedbackSlice";
+import {
+  loadFeedbacks,
+  loadFeedbacksStart,
+} from "../redux/slices/feedbackSlice";
 
 const Home = ({
   active,
@@ -16,20 +19,10 @@ const Home = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(() => {
     setIsLoading(true);
-    async function getData() {
-      const response = await axios.get(
-        "https://product-feedback-app-api.herokuapp.com/api/v1/requests",
-      );
-      const data = response.data.requests;
-      dispatch(
-        loadFeedbacks({
-          feedbacks: data,
-        }),
-      );
-    }
-    getData();
+    dispatch(loadFeedbacksStart());
     setIsLoading(false);
   }, [dispatch]);
   console.log(isLoading);
@@ -53,10 +46,7 @@ const Home = ({
                 setFeedbacks={setFeedbacks}
                 feedbacks={feedbacks}
               />
-              <FeedbackList
-                feedbacks={feedbacks}
-                increaseVote={increaseVote}
-              />
+              <FeedbackList feedbacks={feedbacks} increaseVote={increaseVote} />
             </div>
           </div>
         </div>
