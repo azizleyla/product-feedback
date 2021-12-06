@@ -2,27 +2,42 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import AddComment from "../components/product-details/comments/AddComment";
-import { useDispatch, useSelector } from "react-redux";
-import { loadFeedbackStart } from "../redux/slices/feedbackSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { loadFeedbackStart } from "../redux/slices/feedbackSlice";
 import Feedback from "../components/Feedback";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import axios from "axios";
 
 const FeedbackDetails = () => {
   const params = useParams();
+  const { data, isLoading } = useQuery("feedback", () => {
+    async function getData() {
+      const response = await axios.get(
+        `https://product-feedback-app-api.herokuapp.com/api/v1/requests/${params.feedbackId}`,
+      );
+      return response.data;
+    }
+    return getData();
+  });
 
-  const feedback = useSelector((state) => state.feedback2.singleFeedback);
-  console.log(feedback);
+  // const feedback = useSelector((state) => state.feedback2.singleFeedback);
 
   // const feedbackDetails = data.reducerState.requests.find((request) => {
   //   return request.id === params.feedbackId;
   // });
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loadFeedbackStart(params.feedbackId));
-  }, [dispatch, params.feedbackId]);
+  // useEffect(() => {
+  //   dispatch(loadFeedbackStart(params.feedbackId));
+  // }, [dispatch, params.feedbackId]);
+
+  if (isLoading) {
+    return "loading";
+  }
+  console.log(data.data);
   return (
     <AppRequestsContainer>
-      <Feedback {...feedback} />
+      <Feedback {...data.data} />
       {/* <Feedback {...feedbackDetails} />
       <Comments comments={feedbackDetails?.comments} /> */}
       <AddComment requestId={params.feedbackId} />
