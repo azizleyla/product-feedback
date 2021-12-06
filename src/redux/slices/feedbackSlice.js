@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  feedbacks: []
+  feedbacks: [],
 };
 
 const feedbackSlice = createSlice({
@@ -25,10 +25,10 @@ export const { loadFeedbacks } = feedbackSlice.actions;
 export const loadFeedbacksStart = () => {
   return async function (dispatch) {
     const response = await axios.get(
-      "https://product-feedback-app-api.herokuapp.com/api/v1/requests",
+      "https://product-feedback-app-api.herokuapp.com/api/v1/requests"
     );
-    const feedbacks = response.data.requests;
-    dispatch(loadFeedbacks({ feedbacks: feedbacks }));
+    const data = response.data.requests;
+    dispatch(loadFeedbacks({ feedbacks: data }));
   };
 };
 

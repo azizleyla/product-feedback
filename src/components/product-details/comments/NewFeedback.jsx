@@ -11,9 +11,9 @@ import * as Yup from "yup";
 import { FormikInputError } from "../../FormikInputError";
 import { GoBackBtn } from "../../Button";
 import IconArrowLeft from "../../../assets/shared/icon-arrow-left.svg";
+import newFeedbackIcon from "../../../assets/shared/icon-new-feedback.svg";
 
-const URL =
-  "https://product-feedback-app-api.herokuapp.com/api/v1/requests";
+const URL = "https://product-feedback-app-api.herokuapp.com/api/v1/requests";
 
 export const allCategories = [
   ...new Set([
@@ -66,6 +66,11 @@ const NewFeedback = () => {
         <GoBackBtn to="/">Go Back</GoBackBtn>
       </div>
       <CreateNewFeedback onSubmit={formik.handleSubmit}>
+        <img
+          src={newFeedbackIcon}
+          alt="new-feedback-icon"
+          className="new-feedback-icon"
+        />
         <h3>Create new feedback</h3>
         <div className="input-field">
           <span>Feedback Title</span>
@@ -100,8 +105,8 @@ const NewFeedback = () => {
         <div className="input-field">
           <span>Feedback Detail</span>
           <label>
-            Include any specific comments on what should be improved,
-            added, etc.
+            Include any specific comments on what should be improved, added,
+            etc.
           </label>
           <textarea
             name="detail"
@@ -132,11 +137,16 @@ const CreateNewFeedback = styled.form`
   padding: 5.2rem 4.2rem 4.2rem 4.2rem;
   background-color: #fff;
   border-radius: 10px;
+  position: relative;
+  .new-feedback-icon {
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+  }
   h3 {
     font-weight: bold;
     font-size: 24px;
     line-height: 35px;
-    /* identical to box height */
     text-transform: capitalize;
     letter-spacing: -0.333333px;
     margin-bottom: 4rem;
