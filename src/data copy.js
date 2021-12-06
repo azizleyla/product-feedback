@@ -1,4 +1,3 @@
-
 const data = {
   "currentUser": {
     "image": "./assets/user-images/image-zena.jpg",

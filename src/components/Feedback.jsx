@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { StatusBtn } from "./Button";
 import commentIcon from "../assets/shared/icon-comments.svg";
 const Feedback = ({
-  id,
+  _id: id,
   upvotes,
   title,
   description,

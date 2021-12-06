@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../../../assets/user-images/image-james.jpg";
 import styled from "styled-components";
 import Replies from "./Replies";
 import { PrimaryButton } from "../../Button";
 import Textarea from "../../core/shared/Textarea";
+import { useDispatch } from "react-redux";
 
-const Comment = ({ content, user, replies }) => {
-  const [isCommentReplyBoxOpen, setIsCommentReplyBoxOpen] =
-    useState(false);
+const Comment = ({ content, user, replies, singleCommentData }) => {
+  const [isCommentReplyBoxOpen, setIsCommentReplyBoxOpen] = useState(false);
   const showReplyBox = () => {
     setIsCommentReplyBoxOpen((s) => !s);
   };
+
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(singleLoadFeedbackStart());
+  // }, [dispatch]);
 
   return (
     <div style={{ width: "75rem", margin: "0 auto" }}>

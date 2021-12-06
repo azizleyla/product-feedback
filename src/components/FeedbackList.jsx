@@ -12,7 +12,7 @@ const FeedbackList = ({ feedbacks, increaseVote }) => {
         return (
           <Feedback
             increaseVote={increaseVote}
-            key={feedback.id}
+            key={feedback._id}
             {...feedback}
           />
         );

@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import AddComment from "../components/product-details/comments/AddComment";
+import Comments from "../components/product-details/comments/Comments";
+import { singleLoadFeedbackStart } from "../redux/slices/feedbackSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Feedback from "../components/Feedback";
 
 const FeedbackDetails = () => {
+  const singleCommentData = useSelector((state) => state.feedback2.feedback);
   const params = useParams();
 
-  console.log(params.feedbackId);
+  console.log(singleCommentData);
 
-  // const feedbackDetails = data.reducerState.requests.find((request) => {
-  //   return request.id === params.feedbackId;
-  // });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(singleLoadFeedbackStart());
+  }, [dispatch]);
 
   return (
     <AppRequestsContainer>
-      {/* <Feedback {...feedbackDetails} />
-      <Comments comments={feedbackDetails?.comments} /> */}
+      <Feedback {...singleCommentData} />
+      {/* <Comments comments={feedbackDetails?.comments} /> */}
+      <Comments singleCommentData={singleCommentData} />
       <AddComment requestId={params.feedbackId} />
     </AppRequestsContainer>
   );
