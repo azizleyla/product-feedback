@@ -7,8 +7,8 @@ import { useFormik } from 'formik';
 
 export const allCategories = [
   ...new Set([
-    "UI",
-    "UX",
+    "ui",
+    "ux",
     ...data.productRequests.map((item) => item.category),
   ]),
 ];

@@ -13,7 +13,6 @@ import { GoBackBtn } from "../../Button";
 import IconArrowLeft from "../../../assets/shared/icon-arrow-left.svg";
 import newFeedbackIcon from "../../../assets/shared/icon-new-feedback.svg";
 
-const URL = "https://product-feedback-app-api.herokuapp.com/api/v1/requests";
 
 export const allCategories = [
   ...new Set([
@@ -42,11 +41,14 @@ const NewFeedback = () => {
     }),
     onSubmit: (values) => {
       const updateData = async () => {
-        const response = await axios.post(URL, {
-          title: values.title,
-          category: values.category,
-          description: values.detail,
-        });
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests`,
+          {
+            title: values.title,
+            category: values.category,
+            description: values.detail,
+          },
+        );
         if (response.data.status === "success") {
           history.push("/");
         }
@@ -105,8 +107,8 @@ const NewFeedback = () => {
         <div className="input-field">
           <span>Feedback Detail</span>
           <label>
-            Include any specific comments on what should be improved, added,
-            etc.
+            Include any specific comments on what should be improved,
+            added, etc.
           </label>
           <textarea
             name="detail"

@@ -13,6 +13,7 @@ const Feedback = ({
   increaseVote,
   isThisUserUpvoted,
 }) => {
+
   return (
     <Link to={`/feedbacks/${id}`}>
       <AppRequest>

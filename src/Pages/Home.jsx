@@ -2,12 +2,8 @@ import FeedbackBoard from "../components/FeedbackBoard";
 import FeedbackList from "../components/FeedbackList";
 import React, { useEffect, useState } from "react";
 import RequestBoard from "../components/RequestBoard";
-import { useDispatch } from "react-redux";
+import { useQuery } from "react-query";
 import axios from "axios";
-import {
-  loadFeedbacks,
-  loadFeedbacksStart,
-} from "../redux/slices/feedbackSlice";
 
 const Home = ({
   active,
@@ -17,14 +13,19 @@ const Home = ({
   setFeedbacks,
   sortRequests,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  const { data, isLoading } = useQuery("feedbacks", () => {
+    async function getData() {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests`,
+      );
+      return response.data;
+    }
+    return getData();
+  });
+  if (isLoading) {
+    return <div class="loader"></div>;
+  }
 
-  useEffect(() => {
-    setIsLoading(true);
-    dispatch(loadFeedbacksStart());
-    setIsLoading(false);
-  }, [dispatch]);
   console.log(isLoading);
   return (
     <>
@@ -37,16 +38,19 @@ const Home = ({
           <div className="app__content">
             <FeedbackBoard
               active={active}
-              feedbacks={feedbacks}
+              feedbacks={data}
               filterItems={filterItems}
             />
             <div className="app__requests">
               <RequestBoard
                 sortRequests={sortRequests}
                 setFeedbacks={setFeedbacks}
-                feedbacks={feedbacks}
+                feedbacks={data}
               />
-              <FeedbackList feedbacks={feedbacks} increaseVote={increaseVote} />
+              <FeedbackList
+                feedbacks={data}
+                increaseVote={increaseVote}
+              />
             </div>
           </div>
         </div>
