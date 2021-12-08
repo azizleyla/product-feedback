@@ -4,8 +4,6 @@ import styled from "styled-components";
 import Replies from "./Replies";
 import { PrimaryButton } from "../../Button";
 import Textarea from "../../core/shared/Textarea";
-import { useDispatch } from "react-redux";
-import { loadFeedbackStart } from "../../../redux/slices/feedbackSlice";
 
 const Comment = ({ content, user, replies }) => {
   const [isCommentReplyBoxOpen, setIsCommentReplyBoxOpen] =
@@ -13,10 +11,6 @@ const Comment = ({ content, user, replies }) => {
   const showReplyBox = () => {
     setIsCommentReplyBoxOpen((s) => !s);
   };
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadFeedbackStart());
-  }, [dispatch]);
   return (
     <div style={{ width: "75rem", margin: "0 auto" }}>
       <CommentContainer
