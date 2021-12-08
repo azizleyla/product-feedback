@@ -23,7 +23,7 @@ const Home = ({
     return getData();
   });
   if (isLoading) {
-    return <div class="loader"></div>;
+    return <div className="loader"></div>;
   }
 
   console.log(isLoading);
@@ -47,10 +47,8 @@ const Home = ({
                 setFeedbacks={setFeedbacks}
                 feedbacks={data}
               />
-              <FeedbackList
-                feedbacks={data}
-                increaseVote={increaseVote}
-              />
+              
+              <FeedbackList feedbacks={data} increaseVote={increaseVote} />
             </div>
           </div>
         </div>
