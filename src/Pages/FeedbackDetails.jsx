@@ -15,7 +15,7 @@ const FeedbackDetails = () => {
     () => {
       async function getData() {
         const response = await axios.get(
-          `https://product-feedback-app-api.herokuapp.com/api/v1/requests/${params.feedbackId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests/${params.feedbackId}`,
         );
         return response.data;
       }

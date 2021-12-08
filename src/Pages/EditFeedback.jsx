@@ -2,35 +2,83 @@ import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
 import { DeleteBtn } from "../components/Button";
-import { allCategories } from "../data";
-import NewFeedback from "../components/product-details/comments/NewFeedback";
-
-const status = ["planned", "live", "suggestion", "in-progress"];
+import { allCategories, editCategories, status } from "../data";
+import { useFormik } from "formik";
+import { useParams } from "react-router";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const EditFeedback = () => {
+  const params = useParams();
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      category: "",
+      status: "choose-option",
+      detail: "",
+    },
+
+    onSubmit: (values) => {},
+  });
+
+  const { data, isLoading } = useQuery(
+    ["feedback", params.feedbackId],
+    () => {
+      async function getData() {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests/${params.feedbackId}`,
+        );
+        formik.setFieldValue("title", response.data.data.title);
+        formik.setFieldValue("category", response.data.data.category);
+        formik.setFieldValue("status", response.data.data.status);
+        formik.setFieldValue(
+          "detail",
+          response.data.data.description || "",
+        );
+
+        return response.data;
+      }
+      return getData();
+    },
+  );
+
+  if (isLoading) {
+    return <div className="loader"></div>;
+  }
   return (
     <>
-      <ModalContainer>
+      <FormContainer onSubmit={formik.handleSubmit}>
         <h3>Create new feedback</h3>
         <div className="input-field">
           <span>Feedback Title</span>
           <label>Add a short, descriptive headline</label>
-          <input type="text" />
+          <input
+            name="title"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.title}
+          />
         </div>
         <div className="input-field">
           <span>Category</span>
           <label>Choose a category for your feedback</label>
-          <select>
-            {allCategories.map((item) => {
+          <select
+            name="category"
+            onChange={formik.handleChange}
+            value={formik.values.category}
+          >
+            {editCategories.map((item) => {
               return <option value={item}>{item}</option>;
             })}
           </select>
           <div className="input-field">
             <span>Update status</span>
             <label>Change feature state</label>
-            <select>
+            <select name="status" onChange={formik.handleChange}>
+              <option value="choose-option">Choose option</option>
               {status.map((s) => (
-                <option>{s}</option>
+                <option value={s}>{s}</option>
               ))}
             </select>
           </div>
@@ -41,7 +89,13 @@ const EditFeedback = () => {
             Include any specific comments on what should be improved,
             added, etc.
           </label>
-          <textarea rows="5" cols="10"></textarea>
+          <textarea
+            name="detail"
+            value={formik.values.detail}
+            onChange={formik.handleSubmit}
+            rows="5"
+            cols="10"
+          ></textarea>
         </div>
         <div className="btn-container">
           <DeleteBtn>Delete</DeleteBtn>
@@ -55,11 +109,11 @@ const EditFeedback = () => {
             <button className="add-feedback">Add Feedback</button>
           </div>
         </div>
-      </ModalContainer>
+      </FormContainer>
     </>
   );
 };
-const ModalContainer = styled.div`
+const FormContainer = styled.form`
   padding: 4rem;
   max-width: 54rem;
   background-color: #fff;

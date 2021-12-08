@@ -18,8 +18,6 @@ const App = () => {
   const feedbackState = useSelector((state) => state.feedback2);
   const feedbacks = useSelector((state) => state.feedbacks);
 
-
-
   useEffect(() => {
     const userString = localStorage.getItem("user");
     if (!userString) return;
@@ -44,7 +42,7 @@ const App = () => {
             <Route path="/roadmap">
               <RoadMap feedbacks={feedbackState.feedbacks} />
             </Route>
-            <Route path="/edit">
+            <Route path="/edit/:feedbackId">
               <EditFeedback />
             </Route>
             <Route path="/" exact>

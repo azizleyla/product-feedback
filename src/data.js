@@ -23,7 +23,6 @@ const data = {
             name: "Elijah Moss",
             username: "hexagon.bestagon",
           },
-          
         },
         {
           id: "4",
@@ -307,5 +306,15 @@ export const allCategories = [
     ...data.productRequests.map((item) => item.category),
   ]),
 ];
+
+export const editCategories = [
+  ...new Set([
+    "ui",
+    "ux",
+    ...data.productRequests.map((item) => item.category),
+  ]),
+];
+
+export const status = ["planned", "live", "suggestion", "in-progress"];
 
 export default data;

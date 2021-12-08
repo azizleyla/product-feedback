@@ -18,7 +18,6 @@ function AddComment({ requestId }) {
     setCommentInput("");
   }
 
-
   function changeInput(e) {
     if (e.target.value.length > 250) {
       setError(true);
@@ -33,7 +32,7 @@ function AddComment({ requestId }) {
     <AddCommentStyled hasError={error}>
       <div className="top">
         <h2>Add Comment</h2>
-        <Link to="/edit">
+        <Link to={`/edit/${requestId}`}>
           <PrimaryButton onClick={() => setAction("edit")}>
             Edit feedback
           </PrimaryButton>
