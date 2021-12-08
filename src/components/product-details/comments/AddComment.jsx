@@ -4,29 +4,22 @@ import { PrimaryButton } from "../../Button";
 import { useState } from "react";
 import Textarea from "../../core/shared/Textarea";
 import { Link } from "react-router-dom";
-import { loadFeedbackStart } from "../../../redux/slices/feedbackSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useFormik } from "formik";
 
 function AddComment({ requestId }) {
-  const [commentInput, setCommentInput] = useState("");
   const [error, setError] = useState(false);
   const [action, setAction] = useState("");
   const singleProduct = useSelector((state) => state.singleFeedback);
   console.log(singleProduct);
 
-  function submitForm() {
-    setCommentInput("");
-  }
+  const formik = useFormik({
+    initialValues: {
+      content: "",
+    },
 
-  function changeInput(e) {
-    if (e.target.value.length > 250) {
-      setError(true);
-      return;
-    } else {
-      setCommentInput(e.target.value);
-      setError(false);
-    }
-  }
+    onSubmit: (values) => {},
+  });
 
   return (
     <AddCommentStyled hasError={error}>
@@ -39,16 +32,19 @@ function AddComment({ requestId }) {
         </Link>
       </div>
 
-      <Textarea
-        placeholder="Add comment..."
-        value={commentInput}
-        onChange={changeInput}
-      />
+      <form onSubmit={formik.handleSubmit}>
+        <Textarea
+          placeholder="Add comment..."
+          name="content"
+          onChange={formik.handleChange}
+          value={formik.values.content}
+        />
+      </form>
       <AddCommentFooter>
         <p>
-          <span>{250 - commentInput.length}</span> characters left
+          <span>{250}</span> characters left
         </p>
-        <PrimaryButton onClick={submitForm}>Post Comment</PrimaryButton>
+        <PrimaryButton >Post Comment</PrimaryButton>
       </AddCommentFooter>
     </AddCommentStyled>
   );
