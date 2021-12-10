@@ -6,23 +6,62 @@ import Textarea from "../../core/shared/Textarea";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
 function AddComment({ requestId }) {
   const [error, setError] = useState(false);
   const [action, setAction] = useState("");
-  const singleProduct = useSelector((state) => state.singleFeedback);
-  console.log(singleProduct);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const token = useSelector((state) => state.auth.token);
+  console.log(token);
 
   const formik = useFormik({
     initialValues: {
       content: "",
     },
-
-    onSubmit: (values) => {},
+    validationSchema: Yup.object({
+      content: Yup.string()
+        .max(5, "Must be less than 6")
+        .required("Content is required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      addComment(values);
+      formik.resetForm({});
+    },
   });
+  console.log(formik.values);
+  console.log(formik.errors);
+
+  const addComment = async (values) => {
+    const headersObject = {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    };
+
+    if (values.content.trim().length === 0) {
+      return;
+    }
+    setIsLoading(true);
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/api/v1/comments`,
+      {
+        feedbackId: requestId,
+        content: values.content,
+      },
+      {
+        headers: headersObject,
+      }
+    );
+    setIsLoading(false);
+    console.log(response.data);
+  };
 
   return (
     <AddCommentStyled hasError={error}>
+      {" "}
       <div className="top">
         <h2>Add Comment</h2>
         <Link to={`/edit/${requestId}`}>
@@ -31,7 +70,6 @@ function AddComment({ requestId }) {
           </PrimaryButton>
         </Link>
       </div>
-
       <form onSubmit={formik.handleSubmit}>
         <Textarea
           placeholder="Add comment..."
@@ -39,13 +77,15 @@ function AddComment({ requestId }) {
           onChange={formik.handleChange}
           value={formik.values.content}
         />
-      </form>
-      <AddCommentFooter>
-        <p>
-          <span>{250}</span> characters left
-        </p>
-        <PrimaryButton >Post Comment</PrimaryButton>
-      </AddCommentFooter>
+        <AddCommentFooter>
+          <p>
+            <span>{250 - formik.values.content.length}</span> characters left.
+          </p>
+          <PrimaryButton disabled={!formik.values.content.trim() || isLoading}>
+            {isLoading ? "Loading" : "Post Comment"}
+          </PrimaryButton>
+        </AddCommentFooter>
+      </form>{" "}
     </AddCommentStyled>
   );
 }

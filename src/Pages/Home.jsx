@@ -26,7 +26,7 @@ const Home = ({
     return <div className="loader"></div>;
   }
 
-  console.log(isLoading);
+  // console.log(isLoading);
   return (
     <>
       {isLoading ? (

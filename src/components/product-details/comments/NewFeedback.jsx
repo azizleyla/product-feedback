@@ -13,7 +13,6 @@ import { GoBackBtn } from "../../Button";
 import IconArrowLeft from "../../../assets/shared/icon-arrow-left.svg";
 import newFeedbackIcon from "../../../assets/shared/icon-new-feedback.svg";
 
-
 export const allCategories = [
   ...new Set([
     "UI",
@@ -40,20 +39,20 @@ const NewFeedback = () => {
         .required("Can't be empty"),
     }),
     onSubmit: (values) => {
-      const updateData = async () => {
+      const addFeedback = async () => {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests`,
           {
             title: values.title,
             category: values.category,
             description: values.detail,
-          },
+          }
         );
         if (response.data.status === "success") {
           history.push("/");
         }
       };
-      updateData();
+      addFeedback();
     },
   });
   const hasTitleError = formik.touched.title && formik.errors.title;
@@ -107,8 +106,8 @@ const NewFeedback = () => {
         <div className="input-field">
           <span>Feedback Detail</span>
           <label>
-            Include any specific comments on what should be improved,
-            added, etc.
+            Include any specific comments on what should be improved, added,
+            etc.
           </label>
           <textarea
             name="detail"
