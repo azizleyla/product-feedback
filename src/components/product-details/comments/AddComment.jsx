@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useMutation } from "react-query";
 
 function AddComment({ requestId }) {
   const [error, setError] = useState(false);
@@ -32,8 +33,6 @@ function AddComment({ requestId }) {
       formik.resetForm({});
     },
   });
-  console.log(formik.values);
-  console.log(formik.errors);
 
   const addComment = async (values) => {
     const headersObject = {
@@ -53,7 +52,7 @@ function AddComment({ requestId }) {
       },
       {
         headers: headersObject,
-      }
+      },
     );
     setIsLoading(false);
     console.log(response.data);
@@ -79,9 +78,12 @@ function AddComment({ requestId }) {
         />
         <AddCommentFooter>
           <p>
-            <span>{250 - formik.values.content.length}</span> characters left.
+            <span>{250 - formik.values.content.length}</span> characters
+            left.
           </p>
-          <PrimaryButton disabled={!formik.values.content.trim() || isLoading}>
+          <PrimaryButton
+            disabled={!formik.values.content.trim() || isLoading}
+          >
             {isLoading ? "Loading" : "Post Comment"}
           </PrimaryButton>
         </AddCommentFooter>

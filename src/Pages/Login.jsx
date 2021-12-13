@@ -1,68 +1,45 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
-import { PrimaryButton } from "../components/Button";
 import { useForm } from "react-hook-form";
-// import { login } from "../redux/reducers/user.actions";
 import { useDispatch } from "react-redux";
+import { useMutation } from "react-query";
+import axios from "axios";
+
 import { loginUser } from "../redux/slices/authSlice";
-// const UPDATE_username = "UPDATE_username";
-// const UPDATE_PASSWORD = "UPDATE_PASSWORD";
-
-// const loginFormReducer = (state, action) => {
-//   if (action.type === UPDATE_username) {
-//     return {
-//       ...state,
-//       username: action.payload,
-//     };
-//   }
-//   if (action.type === UPDATE_PASSWORD) {
-//     return {
-//       ...state,
-//       password: action.payload,
-//     };
-//   }
-
-//   return {
-//     username: "",
-//     password: "",
-//     password2: "",
-//   };
-// };
+import { PrimaryButton } from "../components/Button";
 
 const Login = () => {
-  const { register, handleSubmit } = useForm();
-
-  const [isLogin, setIsLogin] = useState(false);
-  const history = useHistory();
-
   const dispatch = useDispatch();
-
-  async function onSubmit(data) {
-    const response = await axios({
-      method: "post",
-      url: `${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`,
-      data: {
-        username: data.username,
-        password: data.password,
+  const { mutate, isLoading } = useMutation(
+    (data) => {
+      return axios({
+        method: "post",
+        url: `${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`,
+        data: {
+          username: data.username,
+          password: data.password,
+        },
+      });
+    },
+    {
+      onSuccess: (data) => {
+        console.log("onSuccess", data);
+        if (data.data.status === "success") {
+          dispatch(
+            loginUser({
+              user: data.data.user,
+              token: data.data.token,
+            }),
+          );
+        }
       },
-    });
+    },
+  );
+  const { register, handleSubmit } = useForm();
+  const [isLogin] = useState(false);
 
-    if (response.data.status === "success") {
-      dispatch(
-        loginUser({
-          user: response.data.user,
-          token: response.data.token,
-        }),
-      );
-      history.push("/");
-      // store.onLogin(response.data.token, response.data.user);
-    }
-
-    // if (!(data.username || data.password)) {
-    //   return;
-    // }
+  function onSubmit(data) {
+    mutate(data);
   }
 
   return (
@@ -100,7 +77,7 @@ const Login = () => {
         </div>
       )}
       <PrimaryButton
-        // disabled={!(state.username && state.password)}
+        disabled={isLoading}
         w100
         type="submit"
         onClick={handleSubmit(onSubmit)}

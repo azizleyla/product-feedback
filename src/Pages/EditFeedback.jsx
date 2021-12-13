@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
 import { DeleteBtn } from "../components/Button";
-import { allCategories, editCategories, status } from "../data";
+import { editCategories, status } from "../data";
 import { useFormik } from "formik";
 import { useParams } from "react-router";
 import { useQuery } from "react-query";

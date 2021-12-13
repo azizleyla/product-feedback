@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import AddComment from "../components/product-details/comments/AddComment";
-// import { useDispatch, useSelector } from "react-redux";
-// import { loadFeedbackStart } from "../redux/slices/feedbackSlice";
 import Feedback from "../components/Feedback";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import axios from "axios";
 
 const FeedbackDetails = () => {
