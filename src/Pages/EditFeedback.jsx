@@ -7,10 +7,11 @@ import { useFormik } from "formik";
 import { useParams } from "react-router";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useHistory } from "react-router";
 
 const EditFeedback = () => {
   const params = useParams();
-
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -46,6 +47,29 @@ const EditFeedback = () => {
   if (isLoading) {
     return <div className="loader"></div>;
   }
+
+  const updateFeedback = async () => {
+    if (formik.status === "choose-option" || formik.category === "") {
+      return;
+    }
+
+    const response = await axios.patch(
+      `https://product-feedback-app-api.herokuapp.com/api/v1/requests/${params.feedbackId}`,
+      {
+        title: formik.values.title,
+        description: formik.values.detail,
+        category: formik.values.category,
+        status: formik.values.status,
+      },
+    );
+    if (response.data.status === "success") {
+      alert("Data updated successfully");
+    } else {
+      alert("Data updated unsuccessfully");
+    }
+    console.log(response.data);
+  };
+
   return (
     <>
       <FormContainer onSubmit={formik.handleSubmit}>
@@ -92,7 +116,7 @@ const EditFeedback = () => {
           <textarea
             name="detail"
             value={formik.values.detail}
-            onChange={formik.handleSubmit}
+            onChange={formik.handleChange}
             rows="5"
             cols="10"
           ></textarea>
@@ -106,7 +130,9 @@ const EditFeedback = () => {
               </button>
             </Link>
 
-            <button className="add-feedback">Add Feedback</button>
+            <button className="add-feedback" onClick={updateFeedback}>
+              Add Feedback
+            </button>
           </div>
         </div>
       </FormContainer>

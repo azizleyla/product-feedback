@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { StatusBtn } from "./Button";
 import commentIcon from "../assets/shared/icon-comments.svg";
+import iconArrowUp from "../assets/shared/icon-arrow-up.svg";
+
 const Feedback = ({
   _id: id,
   upvotes,
@@ -13,7 +15,6 @@ const Feedback = ({
   increaseVote,
   isThisUserUpvoted,
 }) => {
-
   return (
     <Link to={`/feedbacks/${id}`}>
       <AppRequest>
@@ -25,12 +26,8 @@ const Feedback = ({
             return isThisUserUpvoted ? "" : increaseVote(id);
           }}
         >
-          <img
-            className="img"
-            src="assets/shared/icon-arrow-up.svg"
-            alt="icon"
-          />
-          <span>{upvotes}</span>
+          <img className="img" src={iconArrowUp} alt="icon" />
+          <span>{upvotes.length}</span>
         </button>
         <div className="app__request-details">
           <h3>{title}</h3>
