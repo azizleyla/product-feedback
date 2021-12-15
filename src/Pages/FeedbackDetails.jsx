@@ -5,20 +5,21 @@ import AddComment from "../components/product-details/comments/AddComment";
 import Feedback from "../components/Feedback";
 import { useQuery } from "react-query";
 import axios from "axios";
+import Comments from "../components/product-details/comments/Comments";
 
 const FeedbackDetails = () => {
   const params = useParams();
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     ["feedback", params.feedbackId],
     () => {
       async function getData() {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests/${params.feedbackId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/v1/requests/${params.feedbackId}`
         );
         return response.data;
       }
       return getData();
-    },
+    }
   );
 
   // const feedback = useSelector((state) => state.feedback2.singleFeedback);
@@ -39,9 +40,9 @@ const FeedbackDetails = () => {
   return (
     <AppRequestsContainer>
       <Feedback {...data.data} />
-      {/* <Feedback {...feedbackDetails} />
-      <Comments comments={feedbackDetails?.comments} /> */}
-      <AddComment requestId={params.feedbackId} />
+      {/* <Feedback {...feedbackDetails} /> */}
+      <Comments comments={data.data.comments} />
+      <AddComment refetch={refetch} requestId={params.feedbackId} />
     </AppRequestsContainer>
   );
 };

@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useMutation } from "react-query";
 
-function AddComment({ requestId }) {
+function AddComment({ requestId, refetch }) {
   const [error, setError] = useState(false);
   const [action, setAction] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -52,8 +52,9 @@ function AddComment({ requestId }) {
       },
       {
         headers: headersObject,
-      },
+      }
     );
+    refetch();
     setIsLoading(false);
     console.log(response.data);
   };
@@ -78,12 +79,9 @@ function AddComment({ requestId }) {
         />
         <AddCommentFooter>
           <p>
-            <span>{250 - formik.values.content.length}</span> characters
-            left.
+            <span>{250 - formik.values.content.length}</span> characters left.
           </p>
-          <PrimaryButton
-            disabled={!formik.values.content.trim() || isLoading}
-          >
+          <PrimaryButton disabled={!formik.values.content.trim() || isLoading}>
             {isLoading ? "Loading" : "Post Comment"}
           </PrimaryButton>
         </AddCommentFooter>
