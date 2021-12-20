@@ -29,11 +29,11 @@ const Login = () => {
             loginUser({
               user: data.data.user,
               token: data.data.token,
-            }),
+            })
           );
         }
       },
-    },
+    }
   );
   const { register, handleSubmit } = useForm();
   const [isLogin] = useState(false);
