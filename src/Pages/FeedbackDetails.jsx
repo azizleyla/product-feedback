@@ -5,6 +5,7 @@ import AddComment from "../components/product-details/comments/AddComment";
 import Feedback from "../components/Feedback";
 import { useQuery } from "react-query";
 import axios from "axios";
+import Comments from "../components/product-details/comments/Comments";
 
 const FeedbackDetails = () => {
   const params = useParams();
@@ -20,7 +21,7 @@ const FeedbackDetails = () => {
       return getData();
     },
   );
-
+  
   // const feedback = useSelector((state) => state.feedback2.singleFeedback);
 
   // const feedbackDetails = data.reducerState.requests.find((request) => {
@@ -35,12 +36,12 @@ const FeedbackDetails = () => {
   if (isLoading) {
     return <div className="loader2"></div>;
   }
-  console.log(data.data);
+
   return (
     <AppRequestsContainer>
       <Feedback {...data.data} />
-      {/* <Feedback {...feedbackDetails} />
-      <Comments comments={feedbackDetails?.comments} /> */}
+
+      <Comments comments={data.comments} />
       <AddComment requestId={params.feedbackId} />
     </AppRequestsContainer>
   );

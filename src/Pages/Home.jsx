@@ -38,6 +38,7 @@ const Home = ({
         />
         <div className="app__requests">
           <RequestBoard
+            feedbacks={data}
             sortRequests={sortRequests}
             setFeedbacks={setFeedbacks}
             feedbacks={data}
